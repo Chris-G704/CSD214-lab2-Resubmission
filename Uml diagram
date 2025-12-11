@@ -1,0 +1,136 @@
+classDiagram
+    class App {
+        -String menu
+        -ArrayList~SaleableItem~ saleableItems
+        -int currentItem
+        -Scanner input
+        -PrintStream out
+        +App()
+        +App(InputStream, PrintStream)
+        +void run()
+        +boolean findItemExists(SaleableItem)
+        +SaleableItem findItem(SaleableItem)
+        +void editItem()
+        +void editItem(Editable)
+        +void deleteItem()
+        +void populate()
+        +void listAny()
+        +SaleableItem getItem(SaleableItem)
+        +void sellItem()
+        +void listI(Object)
+        +void addItem()
+        +void addItem(SaleableItem)
+    }
+
+    class SaleableItem {
+        <<interface>>
+        +String getTitle()
+        +double getPrice()
+        +void setPrice(double)
+        +int getCopies()
+        +void setCopies(int)
+        +String getIsbn()
+        +String getDescription()
+    }
+
+    class Editable {
+        <<interface>>
+        +Long getId()
+        +void setId(Long)
+    }
+
+    class Publication {
+        <<abstract>>
+        -String title
+        -double price
+        -int copies
+        -String isbn
+        -String description
+        +Publication(String, double, int, String, String)
+        +String getTitle()
+        +void setTitle(String)
+        +double getPrice()
+        +void setPrice(double)
+        +int getCopies()
+        +void setCopies(int)
+        +String getIsbn()
+        +void setIsbn(String)
+        +String getDescription()
+        +void setDescription(String)
+        +String toString()
+    }
+
+    class Book {
+        -Long id
+        -String author
+        +Book(Long, String, double, int, String, String, String)
+        +String getAuthor()
+        +void setAuthor(String)
+        +Long getId()
+        +void setId(Long)
+        +String toString()
+    }
+
+    class Magazine {
+        -Long id
+        -int orderQty
+        -LocalDate currentIssue
+        +Magazine(String, double, int, String, String, int, LocalDate)
+        +int getOrderQty()
+        +void setOrderQty(int)
+        +LocalDate getCurrentIssue()
+        +void setCurrentIssue(LocalDate)
+        +Long getId()
+        +void setId(Long)
+        +String toString()
+    }
+
+    class DiscMag {
+        -boolean hasDisc
+        +DiscMag(Magazine, boolean)
+        +boolean hasDisc()
+        +void setHasDisc(boolean)
+        +String toString()
+    }
+
+    class Ticket {
+        -String description
+        -double price
+        +Ticket(String, double)
+        +String getTitle()
+        +double getPrice()
+        +void setPrice(double)
+        +int getCopies()
+        +void setCopies(int)
+        +String getIsbn()
+        +String getDescription()
+        +void setDescription(String)
+        +String toString()
+    }
+
+    class Util {
+        -Faker faker$
+        -Book fakeBook$
+        -Number number$
+        -Code code$
+        +Book getFakeBook()$
+        +Magazine getFakeMagazine()$
+        +DiscMag getFakeDiscMag()$
+        +Ticket getFakeTicket()$
+        +int getFakeIntegerBetween(int, int)$
+        +double getFakeDoubleBetween(int, int)$
+    }
+
+    App --> SaleableItem : uses
+    App --> Editable : uses
+    SaleableItem <|.. Publication : implements
+    SaleableItem <|.. Ticket : implements
+    Publication <|-- Book : extends
+    Publication <|-- Magazine : extends
+    Magazine <|-- DiscMag : extends
+    Editable <|.. Book : implements
+    Editable <|.. Magazine : implements
+    Util ..> Book : creates
+    Util ..> Magazine : creates
+    Util ..> DiscMag : creates
+    Util ..> Ticket : creates
