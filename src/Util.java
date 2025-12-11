@@ -11,7 +11,7 @@ public class Util {
     private static com.github.javafaker.Number number = faker.number();
     private static com.github.javafaker.Code code = faker.code();
 
-    public static SaleableItem getFakeBook() {
+    public static Book getFakeBook() {
         String title = fakeBook.title();
         double price = number.randomDouble(2, 10, 100);
         int copies = number.numberBetween(1, 20);
@@ -29,11 +29,10 @@ public class Util {
         );
     }
 
-    public static SaleableItem getFakeMagazine() {
+    public static Magazine getFakeMagazine() {
         String title = fakeBook.title();
         double price = number.randomDouble(2, 10, 100);
         int copies = number.numberBetween(1, 20);
-        String author = fakeBook.author();
         String isbn = code.isbn10();
         String description = "Magazine: " + fakeBook.genre();
         return new Magazine(
@@ -47,7 +46,7 @@ public class Util {
         );
     }
 
-    public static SaleableItem getFakeDiscMag() {
+    public static DiscMag getFakeDiscMag() {
         Magazine dm = getFakeMagazine();
         var random = new java.util.Random();
         return new DiscMag(
@@ -56,7 +55,7 @@ public class Util {
         );
     }
 
-    public static SaleableItem getFakeTicket() {
+    public static Ticket getFakeTicket() {
         var random = new java.util.Random();
         return new Ticket(
                 "This is a ticket for cool event # " + random.nextInt(),
@@ -69,6 +68,6 @@ public class Util {
     }
 
     public static double getFakeDoubleBetween(int min, int max) {
-        return number.randomDouble(2, 10, 100); // logic issue: min/max not used
+        return number.randomDouble(2, min, max);
     }
 }
